@@ -1048,35 +1048,35 @@ number_value = {
   "nine": '9'
 }
 
-def extract_word_index(number, line, candidate_list)
-  candidate_list << { index: line.index(number), value: number }
+def extract_word_index(number, line, candidates_list)
+  candidates_list << { index: line.index(number), value: number }
 
   newline = line.sub(number, 'a' * number.length)
 
-  extract_word_index(number, newline, candidate_list) if newline.include?(number)
+  extract_word_index(number, newline, candidates_list) if newline.include?(number)
 end
 
 total = 0
 
 calibration_value_raw.each_with_index do |line, index|
   calibration_value = ''
-  number_candidates = []
+  candidates_list = []
 
   line.each_char.with_index do |v, i|
     next if v.to_i.zero?
 
-    number_candidates << { index: i, value: v }
+    candidates_list << { index: i, value: v }
   end
 
   numbers.each do |number|
     next unless line.include?(number)
 
-    extract_word_index(number, line, number_candidates)
+    extract_word_index(number, line, candidates_list)
   end
 
-  number_candidates = number_candidates.sort_by { |candidate| candidate[:index] }
+  candidates_list = candidates_list.sort_by { |candidate| candidate[:index] }
 
-  [number_candidates.first[:value], number_candidates.last[:value]].each do |value|
+  [candidates_list.first[:value], candidates_list.last[:value]].each do |value|
     calibration_value += if value.to_i.zero?
                            number_value[value.to_sym]
                          else

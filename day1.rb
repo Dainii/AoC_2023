@@ -1048,7 +1048,17 @@ number_value = {
   "nine": '9'
 }
 
-calibration_value_raw.each do |line|
+def extract_word_index(number, line, candidate_list)
+  candidate_list << { index: line.index(number), value: number }
+
+  newline = line.sub(number, 'a' * number.length)
+
+  extract_word_index(number, newline, candidate_list) if newline.include?(number)
+end
+
+total = 0
+
+calibration_value_raw.each_with_index do |line, index|
   calibration_value = ''
   number_candidates = []
 
@@ -1061,18 +1071,12 @@ calibration_value_raw.each do |line|
   numbers.each do |number|
     next unless line.include?(number)
 
-    number_candidates << { index: line.index(number), value: number }
+    extract_word_index(number, line, number_candidates)
   end
 
   number_candidates = number_candidates.sort_by { |candidate| candidate[:index] }
 
-  t = if number_candidates.length == 1
-        [number_candidates.first[:value]]
-      else
-        [number_candidates.first[:value], number_candidates.last[:value]]
-      end
-
-  t.each do |value|
+  [number_candidates.first[:value], number_candidates.last[:value]].each do |value|
     calibration_value += if value.to_i.zero?
                            number_value[value.to_sym]
                          else
@@ -1080,13 +1084,8 @@ calibration_value_raw.each do |line|
                          end
   end
 
-  # puts calibration_value
-
-  calibration_value_int << calibration_value.to_i
+  puts "index: #{index + 4} - value #{calibration_value}"
+  total += calibration_value.to_i
 end
-
-total = 0
-
-calibration_value_int.each { |i| total += i }
 
 puts total

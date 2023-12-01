@@ -1010,17 +1010,17 @@ calibration_value_raw.each do |line|
   calibration_value = nil
 
   line.each_char do |v|
-    unless v.to_i.zero?
-      calibration_value = v
-      break
-    end
+    next if v.to_i.zero?
+
+    calibration_value = v
+    break
   end
 
   line.reverse.each_char do |v|
-    unless v.to_i.zero?
-      calibration_value += v
-      break
-    end
+    next if v.to_i.zero?
+
+    calibration_value += v
+    break
   end
 
   calibration_value_int << calibration_value.to_i

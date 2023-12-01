@@ -1031,3 +1031,62 @@ total = 0
 calibration_value_int.each { |i| total += i }
 
 puts total
+
+# Part 2
+
+calibration_value_int = %i[]
+numbers = %w[one two three four five six seven eight nine]
+number_value = {
+  "one": '1',
+  "two": '2',
+  "three": '3',
+  "four": '4',
+  "five": '5',
+  "six": '6',
+  "seven": '7',
+  "eight": '8',
+  "nine": '9'
+}
+
+calibration_value_raw.each do |line|
+  calibration_value = ''
+  number_candidates = []
+
+  line.each_char.with_index do |v, i|
+    next if v.to_i.zero?
+
+    number_candidates << { index: i, value: v }
+  end
+
+  numbers.each do |number|
+    next unless line.include?(number)
+
+    number_candidates << { index: line.index(number), value: number }
+  end
+
+  number_candidates = number_candidates.sort_by { |candidate| candidate[:index] }
+
+  t = if number_candidates.length == 1
+        [number_candidates.first[:value]]
+      else
+        [number_candidates.first[:value], number_candidates.last[:value]]
+      end
+
+  t.each do |value|
+    calibration_value += if value.to_i.zero?
+                           number_value[value.to_sym]
+                         else
+                           value
+                         end
+  end
+
+  # puts calibration_value
+
+  calibration_value_int << calibration_value.to_i
+end
+
+total = 0
+
+calibration_value_int.each { |i| total += i }
+
+puts total

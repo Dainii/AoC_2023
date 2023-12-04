@@ -3,3 +3,6 @@ AllCops:
 
 Lint/UselessAssignment:
   Enabled: false
+
+Metrics:
+  Enabled: false

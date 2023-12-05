@@ -51,13 +51,12 @@ class Map
   end
 
   def calculate(id)
-    result = id
     @lines.each do |line|
       if (line[:source]..(line[:source] + line[:range] - 1)).include?(id)
-        result = line[:destination] + (id - line[:source])
+        return line[:destination] + (id - line[:source])
       end
     end
-    result
+    id
   end
 end
 
@@ -87,7 +86,7 @@ seeds.each do |seed|
   locations << seed.result
 end
 
-# Part 1
+# Part 1 -> 346433842
 puts "Part 1: #{locations.min}"
 
 data2 = file_data.split("\n\n")
@@ -96,23 +95,18 @@ data_seeds = data2[0][/seeds: (.*)/, 1].split
 count = 0
 location = 0
 
-# (0..data_seeds.length / 2).each do |pair|
-#   (data_seeds[pair].to_i..data_seeds[pair].to_i + data_seeds[count].to_i - 1).each do |id|
-#     seed = Seed.new(id)
-#     seed.process(maps)
-#     location = seed.result if seed.result < location || location.zero?
-#     count += 2
-#   end
-# end
-
 (ARGV[0].to_i..(ARGV[0].to_i + ARGV[1].to_i - 1)).each do |id|
   seed = Seed.new(id)
   seed.process(maps)
   location = seed.result if seed.result < location || location.zero?
 end
 
-puts location
+# Part 2 -> 60294664
+puts "Part 2: #{location}"
 
-# 1_013_518_473 too high
-# 4140591657 5858311 -> 1_013_518_473
-# 2721360939 35899538 -> 60_294_664 -> bonne réponse
+# 4140591657 5858311 -> 1013518473 -> ruby day5/aoc.rb 4140591657 5858311  91.46s user 0.24s system 100% cpu 1:31.70 total
+# 2721360939 35899538 -> 60294664 -> ruby day5/aoc.rb 2721360939 35899538  726.18s user 1.76s system 99% cpu 12:07.95 total
+# 2566406753 71724353 -> 1216540866 -> ruby day5/aoc.rb 2566406753 71724353  1088.18s user 2.66s system 99% cpu 18:10.85 total
+# 2846055542 49953829 -> 471665171 -> ruby day5/aoc.rb 2846055542 49953829  922.96s user 2.50s system 99% cpu 15:25.69 total
+# 3366006921 67827214 -> 60579149
+# 1496677366 101156779 -> 427651238

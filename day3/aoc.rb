@@ -39,7 +39,7 @@ def parse_line(line, number_list, line_number)
   number_index = line.index(number)
 
   number_list << {
-    number: number,
+    number:,
     line: line_number,
     position: number_index
   }

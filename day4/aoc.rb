@@ -43,7 +43,7 @@ class Card
 
     last_card_id = cards.last.id
 
-    (1..count).each do |count|
+    (1..count).each do |_count|
       (1..matching_numbers).each do |number|
         next if id + number > last_card_id
 

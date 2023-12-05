@@ -104,9 +104,34 @@ end
 # Part 2 -> 60294664
 puts "Part 2: #{location}"
 
-# 4140591657 5858311 -> 1013518473 -> ruby day5/aoc.rb 4140591657 5858311  91.46s user 0.24s system 100% cpu 1:31.70 total
-# 2721360939 35899538 -> 60294664 -> ruby day5/aoc.rb 2721360939 35899538  726.18s user 1.76s system 99% cpu 12:07.95 total
-# 2566406753 71724353 -> 1216540866 -> ruby day5/aoc.rb 2566406753 71724353  1088.18s user 2.66s system 99% cpu 18:10.85 total
-# 2846055542 49953829 -> 471665171 -> ruby day5/aoc.rb 2846055542 49953829  922.96s user 2.50s system 99% cpu 15:25.69 total
-# 3366006921 67827214 -> 60579149 -> ruby day5/aoc.rb 3366006921 67827214  1116.03s user 2.63s system 99% cpu 18:38.68 total
-# 1496677366 101156779 -> 427651238 -> ruby day5/aoc.rb 1496677366 101156779  1724.70s user 4.58s system 99% cpu 28:49.51 total
+# 4140591657 5858311 -> 1013518473
+# mri -> ruby day5/aoc.rb 4140591657 5858311  91.46s user 0.24s system 100% cpu 1:31.70 total
+# jruby -> ruby day5/aoc.rb 4140591657 5858311  88.78s user 0.85s system 107% cpu 1:23.03 total
+# truffleruby -> ruby day5/aoc.rb 4140591657 5858311  6.76s user 0.36s system 114% cpu 6.207 total
+#
+# 2721360939 35899538 -> 60294664
+# mri -> ruby day5/aoc.rb 2721360939 35899538  726.18s user 1.76s system 99% cpu 12:07.95 total
+# truffleruby -> ruby day5/aoc.rb 2721360939 35899538  46.01s user 1.60s system 102% cpu 46.317 total
+#
+# 2566406753 71724353 -> 1216540866
+# mri -> ruby day5/aoc.rb 2566406753 71724353  1088.18s user 2.66s system 99% cpu 18:10.85 total
+#
+# 2846055542 49953829 -> 471665171
+# mri -> ruby day5/aoc.rb 2846055542 49953829  922.96s user 2.50s system 99% cpu 15:25.69 total
+#
+# 3366006921 67827214 -> 60579149
+# mri -> ruby day5/aoc.rb 3366006921 67827214  1116.03s user 2.63s system 99% cpu 18:38.68 total
+#
+# 1496677366 101156779 -> 427651238
+# mri -> ruby day5/aoc.rb 1496677366 101156779  1724.70s user 4.58s system 99% cpu 28:49.51 total
+# truffleruby -> ruby day5/aoc.rb 1496677366 101156779  108.37s user 3.13s system 101% cpu 1:50.08 total
+#
+# 383860877 424668759 ->
+#
+# 3649554897 442182562 ->
+#
+# 2988140126 256306471 -> 94595176
+#
+# 919339981 562444630 ->
+# truffleruby -> ruby day5/aoc.rb 919339981 562444630  1488.06s user 28.02s system 98% cpu 25:37.38 total
+#

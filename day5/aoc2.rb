@@ -129,6 +129,6 @@ stages.each do |stage|
 end
 
 # Part 2 -> 60294664
-# mri -> ruby day5/aoc2.rb  0.10s user 0.01s system 98% cpu 0.115 total
+# mri -> ruby day5/aoc2.rb  0.08s user 0.03s system 99% cpu 0.110 total
 #
 puts "Part 2: #{seedranges.map(&:start).min}"

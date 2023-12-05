@@ -105,10 +105,14 @@ location = 0
 #   end
 # end
 
-(919_339_981..(919_339_981 + 562_444_630 - 1)).each do |id|
+(ARGV[0].to_i..(ARGV[0].to_i + ARGV[1].to_i - 1)).each do |id|
   seed = Seed.new(id)
   seed.process(maps)
   location = seed.result if seed.result < location || location.zero?
 end
 
 puts location
+
+# 1_013_518_473 too high
+# 4140591657 5858311 -> 1_013_518_473
+# 2721360939 35899538 -> 60_294_664 -> bonne réponse

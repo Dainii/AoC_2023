@@ -70,9 +70,9 @@ end
 # until all_arrived(paths)
 #   instructions.chars.each do |instruction|
 #     next unless %w[L R].include?(instruction)
-# 
+#
 #     # puts "Instruction #{instruction}"
-# 
+#
 #     # puts("Round #{steps} ---")
 #     paths.each_key do |path|
 #       # puts "From position #{paths[path]} with instruction #{instruction}"

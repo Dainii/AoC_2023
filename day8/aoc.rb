@@ -117,8 +117,6 @@ paths.each_key do |path|
   count << steps
 end
 
-puts count
-
 # Part 2: 15_726_453_850_399
 # 3_293_782_158_771_276 too high
 puts "Part 2: #{count.reduce(1, :lcm)} steps"

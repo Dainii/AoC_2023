@@ -3,6 +3,7 @@
 file_data = File.readlines('day9/real_input.txt')
 
 all_next_values = 0
+all_previous_values = 0
 
 file_data.each do |history|
   history = history.split.map(&:to_i)
@@ -33,8 +34,20 @@ file_data.each do |history|
 
   # puts "Next value #{next_value}"
   all_next_values += next_value
+
+  previous_value = 0
+  steps.reverse.each_with_index do |_step, index|
+    next if index >= steps.length - 1
+
+    previous_value = steps.reverse[index + 1].first - previous_value
+    # puts "Previous value #{previous_value}"
+  end
+
+  all_previous_values += previous_value
 end
 
 # Part 1 - 1904165718
 puts "Part 1: #{all_next_values}"
 
+# Part 2 - 964
+puts "Part 2: #{all_previous_values}"

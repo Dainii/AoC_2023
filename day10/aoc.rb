@@ -204,4 +204,104 @@ loop.each do |pipe|
 end
 
 # Part 1: 6856
-puts "Number of step: #{loop.length / 2}"
+puts "Part 1: #{loop.length / 2}"
+
+def touch_a_zero?(dot, display_array)
+  return true if display_array[dot.first][dot.last + 1] == '0'
+  return true if display_array[dot.first][dot.last - 1] == '0'
+  return true if display_array[dot.first + 1][dot.last] == '0'
+  return true if display_array[dot.first - 1][dot.last] == '0'
+
+  false
+end
+
+tiles_enclosed = 0
+display_array = []
+file_data.each_with_index do |line, index|
+  display_array[index] = [].fill('.', 0..line.chars.reject { |c| c == "\n" }.length - 1)
+end
+
+loop.each do |pipe|
+  display_array[pipe.coord_y][pipe.coord_x] = pipe.type
+end
+
+# Change every dot that touch the border to 0
+# First line
+(0..display_array.first.length - 1).each do |x|
+  display_array.first[x] = '0' if display_array.first[x] == '.'
+end
+
+# last line
+(0..display_array.last.length - 1).each do |x|
+  display_array.last[x] = '0' if display_array.last[x] == '.'
+end
+
+# Fill each rows with 0 until the first X is reached
+(0..display_array.length - 1).each do |y|
+  (0..display_array[y].length - 1).each do |x|
+    break if ['J', '7', 'L', 'F', '|', '-'].include?(display_array[y][x])
+
+    display_array[y][x] = '0'
+  end
+
+  # same thing but from the end
+  (0..display_array[y].length - 1).each do |x|
+    break if ['J', '7', 'L', 'F', '|', '-'].include?(display_array[y][display_array[y].length - x])
+
+    display_array[y][display_array[y].length - x] = '0'
+  end
+end
+
+changed = true
+
+# Propagation of zero
+while changed
+  changed = false
+  dots_location = []
+
+  (0..display_array.length - 1).each do |y|
+    (0..display_array[y].length - 1).each do |x|
+      dots_location << [y, x] if display_array[y][x] == '.'
+    end
+  end
+
+  dots_location.each do |dot|
+    is_unvalid = touch_a_zero?(dot, display_array)
+
+    if is_unvalid
+      display_array[dot.first][dot.last] = '0'
+      changed = true
+    end
+  end
+end
+
+# Check if the remaining zeros are valids
+(0..display_array.length - 1).each do |y|
+  next unless display_array[y].include?('.')
+
+  count = 0
+  last = '0'
+  display_array[y].each_with_index do |char, x|
+    case char
+    when 'F', '7', '|'
+      count += 1
+    when 'L', 'J'
+      count += 2
+    when '.'
+      display_array[y][x] = '0' if count.even?
+    end
+  end
+end
+
+# puts 'Display Array'
+# display_array.each do |line|
+#   puts line.to_s
+# end
+
+(0..display_array.length - 1).each do |y|
+  tiles_enclosed += display_array[y].select { |e| e == '.' }.count
+end
+
+# Part 2: 779 - too high
+# 501 - right answer
+puts "Part 2: #{tiles_enclosed}"

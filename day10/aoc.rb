@@ -292,6 +292,28 @@ end
   end
 end
 
+# Replace character
+(0..display_array.length - 1).each do |y|
+  display_array[y].each_with_index do |char, x|
+    case char
+    when 'F'
+      display_array[y][x] = '╭'
+    when 'J'
+      display_array[y][x] = '╯'
+    when '7'
+      display_array[y][x] = '╮'
+    when 'L'
+      display_array[y][x] = '╰'
+    when '-'
+      display_array[y][x] = '─'
+    when '|'
+      display_array[y][x] = '│'
+    when '0'
+      display_array[y][x] = ' '
+    end
+  end
+end
+
 # puts 'Display Array'
 display_array.each do |line|
   puts line.join

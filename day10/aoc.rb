@@ -280,7 +280,6 @@ end
   next unless display_array[y].include?('.')
 
   count = 0
-  last = '0'
   display_array[y].each_with_index do |char, x|
     case char
     when 'F', '7', '|'
@@ -294,9 +293,9 @@ end
 end
 
 # puts 'Display Array'
-# display_array.each do |line|
-#   puts line.to_s
-# end
+display_array.each do |line|
+  puts line.join
+end
 
 (0..display_array.length - 1).each do |y|
   tiles_enclosed += display_array[y].select { |e| e == '.' }.count

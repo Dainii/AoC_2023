@@ -15,7 +15,7 @@ file_data.each_with_index do |line, index|
                             c == "\n"
                           end.uniq.first == '.'
 end
-puts empty_lines.to_s
+# puts empty_lines.join
 
 empty_rows = []
 # Find empty rows
@@ -27,7 +27,7 @@ empty_rows = []
   # puts "Row #{index}: #{row}"
   empty_rows << index if row.chars.uniq.count == 1 && row.chars.uniq.first == '.'
 end
-puts empty_rows.to_s
+# puts empty_rows.join
 
 galaxy_id = 1
 galaxies_locations = {}
@@ -89,7 +89,12 @@ pairs = 0
 (1..galaxy_id - 1).each do |id|
   # puts "Path length between galaxy #{id}"
   (id + 1..galaxy_id - 1).each do |id2|
-    path_length = galaxy_path_length(galaxies_locations[id], galaxies_locations[id2], empty_factor, empty_lines, empty_rows)
+    path_length = galaxy_path_length(
+      galaxies_locations[id],
+      galaxies_locations[id2],
+      empty_factor, empty_lines,
+      empty_rows
+    )
     # puts "and galaxy #{id2}: #{path_length}"
     total_path_length += path_length
 

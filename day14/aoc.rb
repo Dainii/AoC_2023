@@ -51,7 +51,7 @@ file_data.each_with_index do |line, index|
   platform2[index] = line
 end
 
-(1..1_000_000_000).each do |cycle|
+(1..1_000_000_000).each do |_cycle|
   # puts "Cycle #{cycle}"
 
   changes = true

@@ -51,7 +51,9 @@ file_data.each_with_index do |line, index|
   platform2[index] = line
 end
 
-(1..1_000_000_000).each do |_cycle|
+CYCLE_RUN = 1_000
+
+CYCLE_RUN.times do |cycle|
   # puts "Cycle #{cycle}"
 
   changes = true
@@ -71,6 +73,11 @@ end
       end
     end
   end
+  # Platform rolled up north
+  # puts 'Platform after rolling north'
+  # platform.each do |line|
+  #   puts line
+  # end
 
   changes = true
   # West
@@ -88,6 +95,11 @@ end
       end
     end
   end
+  # Platform rolled up West
+  # puts 'Platform after rolling West'
+  # platform.each do |line|
+  #   puts line
+  # end
 
   changes = true
   # South
@@ -112,6 +124,11 @@ end
       end
     end
   end
+  # Platform rolled up South
+  # puts 'Platform after rolling South'
+  # platform.each do |line|
+  #   puts line
+  # end
 
   changes = true
   # East
@@ -123,7 +140,7 @@ end
         next if char_index.zero?
 
         real_char_index = line.length - char_index - 1
-        next unless char == 'O' && line[char_index - 1] == '.'
+        next unless char == 'O' && line[real_char_index + 1] == '.'
 
         platform2[index][real_char_index + 1] = 'O'
         platform2[index][real_char_index] = '.'
@@ -131,9 +148,14 @@ end
       end
     end
   end
+  # Platform rolled up east
+  # puts 'Platform after rolling east'
+  # platform.each do |line|
+  #   puts line
+  # end
 end
 
-# Part 2
+# Part 2 - 102829
 total_load2 = 0
 platform2.each_with_index { |l, i| total_load2 += l.count('O') * (platform2.length - i) }
 puts "Part 2: #{total_load2}"

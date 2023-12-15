@@ -53,7 +53,7 @@ end
 
 CYCLE_RUN = 1_000
 
-CYCLE_RUN.times do |cycle|
+CYCLE_RUN.times do |_cycle|
   # puts "Cycle #{cycle}"
 
   changes = true

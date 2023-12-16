@@ -129,7 +129,7 @@ max_energized_tiles = 0
   # First row
   if row.zero?
     (0..layout[row].length - 1).each do |col|
-      puts "Start beam from row #{row} col #{col} direction south"
+      # puts "Start beam from row #{row} col #{col} direction south"
       # Create the first beam
       beams = []
       energized_tiles = []
@@ -151,7 +151,7 @@ max_energized_tiles = 0
   # last row
   elsif row == layout.length - 1
     (0..layout[row].length - 1).each do |col|
-      puts "Start beam from row #{row} col #{col} direction north"
+      # puts "Start beam from row #{row} col #{col} direction north"
       # Create the first beam
       beams = []
       energized_tiles = []
@@ -173,7 +173,7 @@ max_energized_tiles = 0
   # all other rows
   else
     # Beam from east
-    puts "Start beam from row #{row} col 0 direction east"
+    # puts "Start beam from row #{row} col 0 direction east"
     beams = []
     energized_tiles = []
     beams << Beam.new(row: row, col: -1, direction: :east)
@@ -189,7 +189,7 @@ max_energized_tiles = 0
     max_energized_tiles = energized_tiles_count if energized_tiles_count > max_energized_tiles
 
     # Beam from west
-    puts "Start beam from row #{row} col #{layout[row].length - 1} direction west"
+    # puts "Start beam from row #{row} col #{layout[row].length - 1} direction west"
     beams = []
     energized_tiles = []
     beams << Beam.new(row: row, col: layout[row].length, direction: :west)
@@ -207,7 +207,7 @@ max_energized_tiles = 0
 
   # corners
   # 0,0 to east
-  puts "Start beam from row 0 col 0 direction east"
+  # puts "Start beam from row 0 col 0 direction east"
   beams = []
   energized_tiles = []
   beams << Beam.new(row: 0, col: -1, direction: :east)
@@ -223,7 +223,7 @@ max_energized_tiles = 0
   max_energized_tiles = energized_tiles_count if energized_tiles_count > max_energized_tiles
 
   # 0, last to west
-  puts "Start beam from row 0 col #{layout[0].length} last direction west"
+  # puts "Start beam from row 0 col #{layout[0].length} last direction west"
   beams = []
   energized_tiles = []
   beams << Beam.new(row: 0, col: layout[0].length, direction: :west)
@@ -239,7 +239,7 @@ max_energized_tiles = 0
   max_energized_tiles = energized_tiles_count if energized_tiles_count > max_energized_tiles
 
   # last, 0 to east
-  puts "Start beam from row #{layout.length - 1} col 0 last direction west"
+  # puts "Start beam from row #{layout.length - 1} col 0 last direction west"
   beams = []
   energized_tiles = []
   beams << Beam.new(row: layout.length - 1, col: -1, direction: :east)
@@ -255,7 +255,7 @@ max_energized_tiles = 0
   max_energized_tiles = energized_tiles_count if energized_tiles_count > max_energized_tiles
 
   # last, last to west
-  puts "Start beam from row #{layout.length - 1} col #{layout[0].length} last direction west"
+  # puts "Start beam from row #{layout.length - 1} col #{layout[0].length} last direction west"
   beams = []
   energized_tiles = []
   beams << Beam.new(row: layout.length - 1, col: layout[layout.length - 1].length, direction: :west)
@@ -272,4 +272,5 @@ max_energized_tiles = 0
 end
 
 # Part 2 - 7716
+# truffleruby -> ruby day16/aoc.rb  141.61s user 0.56s system 117% cpu 2:01.13 total
 puts "Max energized tiles : #{max_energized_tiles}"

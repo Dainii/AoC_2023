@@ -134,7 +134,7 @@ max_energized_tiles = 0
       beams = []
       energized_tiles = []
 
-      beams << Beam.new(row: -1, col: col, direction: :south)
+      beams << Beam.new(row: -1, col:, direction: :south)
 
       while beams.reject(&:out).count.positive?
         # 40.times do
@@ -156,7 +156,7 @@ max_energized_tiles = 0
       beams = []
       energized_tiles = []
 
-      beams << Beam.new(row: layout.length, col: col, direction: :north)
+      beams << Beam.new(row: layout.length, col:, direction: :north)
 
       while beams.reject(&:out).count.positive?
         # 40.times do
@@ -176,7 +176,7 @@ max_energized_tiles = 0
     # puts "Start beam from row #{row} col 0 direction east"
     beams = []
     energized_tiles = []
-    beams << Beam.new(row: row, col: -1, direction: :east)
+    beams << Beam.new(row:, col: -1, direction: :east)
     while beams.reject(&:out).count.positive?
       # 40.times do
       beams.each do |beam|
@@ -192,7 +192,7 @@ max_energized_tiles = 0
     # puts "Start beam from row #{row} col #{layout[row].length - 1} direction west"
     beams = []
     energized_tiles = []
-    beams << Beam.new(row: row, col: layout[row].length, direction: :west)
+    beams << Beam.new(row:, col: layout[row].length, direction: :west)
     while beams.reject(&:out).count.positive?
       # 40.times do
       beams.each do |beam|

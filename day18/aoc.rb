@@ -146,5 +146,5 @@ area = 0.5 * sum_vertices.abs
 puts "Area: #{area}"
 puts "Perimeter: #{perimeter}"
 
-# Part 2
+# Part 2 - 90111113594927
 puts "Real area = #{area + (perimeter / 2) + 1}"

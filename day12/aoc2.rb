@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# From https://github.com/alex-Symbroson/Advent-of-Code/blob/master/2023/12.rb
+
 require 'English'
 memo = {}
 input = $DEFAULT_INPUT.map(&:split).each { _1[1] = _1[1].split(',').map(&:to_i) }

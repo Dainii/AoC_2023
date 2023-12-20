@@ -1,14 +1,17 @@
 # frozen_string_literal: true
 
 class Module
-  attr_accessor :destination_modules, :id
+  attr_accessor :destination_modules, :id, :triggered
 
-  def process(pulses, pulse); end
+  def process(pulses, pulse)
+    @triggered = true if pulse.type == :low
+  end
 
   def initialize(id, destination_list)
     @destination_modules = []
     @id = id
     destination_list.split(',').each { |d| @destination_modules << d.strip }
+    @triggered = false
     post_initialize
   end
 
@@ -151,8 +154,14 @@ end
 
 low_pulses_count = 0
 high_pulses_count = 0
+rx_parent = modules.select { |_k, v| v.destination_modules.include?('rx') }.first
+puts "rx module parent is #{rx_parent[1]}"
+rx_grandparents = modules.select { |_k, v| v.destination_modules.include?(rx_parent[0]) }
+puts "rx module grandparents are #{rx_grandparents.keys}"
+grandparents_full_count = {}
+rx_grandparents.each_key { |k| grandparents_full_count[k] = 0 }
 
-1_000.times do |_cycle|
+1_000_000.times do |cycle|
   pulses = []
   next_pulses = []
 
@@ -168,6 +177,11 @@ high_pulses_count = 0
 
     pulses = next_pulses
     next_pulses = []
+
+    rx_grandparents.each_key do |mod|
+      # puts "Module #{mod} inputs: #{modules[mod].input_modules}"
+      grandparents_full_count[mod] = cycle if grandparents_full_count[mod].zero? && !modules[mod].all_inputs_high?
+    end
   end
 end
 
@@ -177,3 +191,9 @@ puts "Pulses product: #{low_pulses_count * high_pulses_count}"
 
 # Parts 1 - 730797576
 puts "Part 1: #{low_pulses_count * high_pulses_count}"
+
+# Parts 2 -
+# too low 393_226_255_344
+# too low 113_309_380_261_272
+# puts "Part 2: #{rx_count} button pressed"
+puts grandparents_full_count.values.reduce(1, :lcm)

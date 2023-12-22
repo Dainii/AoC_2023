@@ -3,7 +3,7 @@
 class Module
   attr_accessor :destination_modules, :id, :triggered
 
-  def process(pulses, pulse)
+  def process(_pulses, pulse)
     @triggered = true if pulse.type == :low
   end
 
@@ -122,13 +122,13 @@ file_data.each do |line|
   line = line.split(' -> ')
 
   if line[0][0] == '%'
-    modules["#{line[0][1..-1]}"] = FlipFlop.new(line[0][1..-1], line[1])
+    modules[(line[0][1..]).to_s] = FlipFlop.new(line[0][1..], line[1])
   elsif line[0][0] == '&'
-    modules["#{line[0][1..-1]}"] = Conjunction.new(line[0][1..-1], line[1])
+    modules[(line[0][1..]).to_s] = Conjunction.new(line[0][1..], line[1])
   elsif line[0] == 'broadcaster'
     modules['broadcaster'] = Broadcast.new('broadcaster', line[1])
   else
-    modules["#{line[0][1..-1]}"] = Module.new(line[0][1..-1], line[1])
+    modules[(line[0][1..]).to_s] = Module.new(line[0][1..], line[1])
   end
 end
 
@@ -195,5 +195,6 @@ puts "Part 1: #{low_pulses_count * high_pulses_count}"
 # Parts 2 -
 # too low 393_226_255_344
 # too low 113_309_380_261_272
+# good answer - 2_267_320_771_523_51
 # puts "Part 2: #{rx_count} button pressed"
 puts grandparents_full_count.values.reduce(1, :lcm)

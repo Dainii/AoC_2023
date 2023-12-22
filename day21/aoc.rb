@@ -74,8 +74,8 @@ def dijkstra(graph, start)
   distances
 end
 
-file_data = File.readlines('day21/real_input.txt')
-STEPS = 64
+file_data = File.readlines('day21/test_input.txt')
+STEPS = 6
 max_y = file_data.length - 1
 graph = {}
 s_location = ''
@@ -96,3 +96,53 @@ garden_spots = dijkstra(graph, s_location).select { |_k, v| v < STEPS + 1 }.reje
 
 # Part 1 - 3709
 puts "Part 1: #{garden_spots.length}"
+
+# Part 2
+file_data_copy = File.read('day21/real_input.txt').sub('S', '.').split("\n")
+
+# create a 3*3 map
+map = []
+y_margin = 0
+
+file_data.each_with_index do |line, y|
+  map[y] = line.chars.reject { |l| l == "\n" }.join.sub('S', '.') * 3
+end
+
+y_margin += file_data.length
+file_data.each_with_index do |line, y|
+  map[y_margin + y] = line.chars.reject { |l| l == "\n" }.join.sub('S', '.') +
+                      line.chars.reject { |l| l == "\n" }.join +
+                      line.chars.reject { |l| l == "\n" }.join.sub('S', '.')
+end
+
+y_margin += file_data.length
+file_data.each_with_index do |line, y|
+  map[y_margin + y] = line.chars.reject { |l| l == "\n" }.join.sub('S', '.') * 3
+end
+
+map.each do |line|
+  puts line
+end
+
+STEPS_P2 = 1_000
+max_y = map.length - 1
+graph = {}
+s_location = ''
+
+graph = {}
+map.each_with_index do |line, y|
+  max_x = map[y].chars.reject { |c| c == "\n" }.length - 1
+  line.chars.reject { |c| c == "\n" }.each_with_index do |char, x|
+    next if char == '#'
+
+    s_location = "#{y}:#{x}" if char == 'S'
+
+    graph["#{y}:#{x}"] = get_all_neighbors(y, x, max_y, max_x, map)
+  end
+end
+
+garden_spots = dijkstra(graph, s_location).select { |_k, v| v < STEPS_P2 + 1 }.reject { |_k, v| v.even? }
+# puts garden_spots
+
+# Part 2 -
+puts "Part 2: #{garden_spots.length}"

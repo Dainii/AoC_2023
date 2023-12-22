@@ -18,7 +18,7 @@ class Numeric
 end
 
 class SandCube
-  attr_accessor :id, :x, :y, :z, :length, :dept, :height, :dependencies
+  attr_accessor :id, :x, :y, :z, :length, :dept, :height, :dependencies, :chain
 
   def initialize(id, info)
     @id = id
@@ -87,6 +87,18 @@ class SandCube
       @dependencies << k if above
     end
   end
+
+  def chain_reaction(grid)
+    above_cubes = grid.select { |k, v| v.z > @z + @height }
+
+    removed_cubes = [@id]
+
+    above_cubes.sort_by { |_k, v| v.z }.each do |cube|
+      removed_cubes << cube[0] if cube[1].dependencies.all? { |d| removed_cubes.include?(d) }
+    end
+
+    @chain = removed_cubes.length - 1
+  end
 end
 
 file_data = File.readlines('day22/real_input.txt')
@@ -121,3 +133,12 @@ puts ''
 # 1134 - too high
 # 437 - ok
 puts "Part 1: #{disintegrated_bricks_count}"
+puts ''
+
+puts 'Calculate chain reaction ...'
+grid.each { |_k, v| v.chain_reaction(grid) }
+# grid.each { |k, v| puts "#{v} would generate a chain of #{v.chain}" }
+puts ''
+
+# Part 2 - 42561
+puts "Part 2: #{grid.sum { |k, v| v.chain }}"

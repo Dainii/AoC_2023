@@ -89,7 +89,7 @@ class SandCube
   end
 
   def chain_reaction(grid)
-    above_cubes = grid.select { |k, v| v.z > @z + @height }
+    above_cubes = grid.select { |_k, v| v.z > @z + @height }
 
     removed_cubes = [@id]
 
@@ -141,4 +141,4 @@ grid.each { |_k, v| v.chain_reaction(grid) }
 puts ''
 
 # Part 2 - 42561
-puts "Part 2: #{grid.sum { |k, v| v.chain }}"
+puts "Part 2: #{grid.sum { |_k, v| v.chain }}"

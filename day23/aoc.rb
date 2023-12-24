@@ -73,20 +73,20 @@ class Route
 
     case @force_direction
     when :up
-      neighbors = valid_neighbors.select { |k, v| v == :up }
+      neighbors = valid_neighbors.select { |_k, v| v == :up }
     when :down
-      neighbors = valid_neighbors.select { |k, v| v == :down }
+      neighbors = valid_neighbors.select { |_k, v| v == :down }
     when :right
-      neighbors = valid_neighbors.select { |k, v| v == :right }
+      neighbors = valid_neighbors.select { |_k, v| v == :right }
     when :left
-      neighbors = valid_neighbors.select { |k, v| v == :left }
+      neighbors = valid_neighbors.select { |_k, v| v == :left }
     end
 
-    unless neighbors.empty?
-      neighbors
-    else
+    if neighbors.empty?
       @force_direction = nil
       valid_neighbors
+    else
+      neighbors
     end
   end
 
@@ -129,35 +129,33 @@ class Route
     valid_neighbors = find_valid_neighbor(neighbors)
     # puts "Valid neighbors: #{valid_neighbors}"
 
-      valid_neighbors.each_key.with_index do |key, index|
-        if @path.include?(key)
-          @status = :stuck
-        else
-          if index.zero?
-            @last_location = @location
-            @location = key
-            @path << key
-            @direction = valid_neighbors[key]
-            @force_direction = get_force_direction(map, key)
-          else
-            new_path = @path.dup
-            new_path.delete(valid_neighbors.keys.first)
-            new_path << key
-            params = {
-              location: key,
-              last_location: @last_location.dup,
-              path: new_path,
-              direction: valid_neighbors[key],
-              force_direction: get_force_direction(map, key)
-            }
-            routes << Route.new(params)
-          end
-        end
+    valid_neighbors.each_key.with_index do |key, index|
+      if @path.include?(key)
+        @status = :stuck
+      elsif index.zero?
+        @last_location = @location
+        @location = key
+        @path << key
+        @direction = valid_neighbors[key]
+        @force_direction = get_force_direction(map, key)
+      else
+        new_path = @path.dup
+        new_path.delete(valid_neighbors.keys.first)
+        new_path << key
+        params = {
+          location: key,
+          last_location: @last_location.dup,
+          path: new_path,
+          direction: valid_neighbors[key],
+          force_direction: get_force_direction(map, key)
+        }
+        routes << Route.new(params)
       end
+    end
   end
 end
 
-file_data = File.readlines('day23/real_input.txt')
+file_data = File.readlines('day23/test_input.txt')
 max_y = file_data.length - 1
 graph = {}
 map = []
@@ -203,4 +201,3 @@ end
 # Part 1 - 2438
 max_path_route = routes.select { |r| r.status == :arrived }.max_by { |r| r.path.length }
 puts "Part 1: #{max_path_route.path.length}"
-

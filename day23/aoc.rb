@@ -119,10 +119,11 @@ class Route
   def step_forward(graph, routes, map)
     # puts "Route at location: #{@location} with direction #{@direction} force direction #{@force_direction || 'none'}"
 
-    if @force_direction && opposed_direction(@force_direction, @direction)
-      @status = :stuck
-      return
-    end
+    # Comment this for part 2
+    # if @force_direction && opposed_direction(@force_direction, @direction)
+    #   @status = :stuck
+    #   return
+    # end
 
     neighbors = graph[@location].keys
     neighbors.delete(@last_location)
@@ -155,7 +156,7 @@ class Route
   end
 end
 
-file_data = File.readlines('day23/test_input.txt')
+file_data = File.readlines('day23/real_input.txt')
 max_y = file_data.length - 1
 graph = {}
 map = []
@@ -183,21 +184,35 @@ puts "X is at #{x_location}"
 # map.each { |l| puts l }
 
 routes = []
-routes << Route.new({ location: s_location })
+new_routes = []
+new_routes << Route.new({ location: s_location })
+max_route_length = 0
 
-routes.each do |route|
-  while route.status == :walking
-    route.step_forward(graph, routes, map)
-    route.status = :arrived if route.location == x_location
-    # puts route
-    # sleep(0.5)
+until new_routes.empty?
+  routes = new_routes
+  new_routes = []
+
+  routes.each do |route|
+    while route.status == :walking
+      route.step_forward(graph, new_routes, map)
+      route.status = :arrived if route.location == x_location
+      # puts route
+      # sleep(0.5)
+    end
+
+    # puts "Route is #{route.status}"
+    if route.status == :arrived && route.path.length > max_route_length
+      max_route_length = route.path.length
+      puts max_route_length
+    end
   end
-
-  # puts "Route is #{route.status}"
 end
 
-# routes.select { |r| r.status == :arrived }.each { |r| puts r.path.length }
-
 # Part 1 - 2438
-max_path_route = routes.select { |r| r.status == :arrived }.max_by { |r| r.path.length }
-puts "Part 1: #{max_path_route.path.length}"
+# max_path_route = routes.max_by { |r| r.path.length }
+puts "Part 1: #{max_route_length}"
+
+# Part 2 - comment lines 123-126
+# 5674 too low
+# 5806 too low
+# 5986 too low

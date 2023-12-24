@@ -54,6 +54,7 @@ PLATFORMS
 
 DEPENDENCIES
   debug
+  irb
   rubocop
   ruby-lsp
 

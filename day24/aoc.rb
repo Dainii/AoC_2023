@@ -79,16 +79,14 @@ lines.each_with_index do |line, index|
 
     # puts "at #{intersect_point}"
 
-    if (
+    next unless
       (MIN..MAX).include?(intersect_point.x) &&
       (MIN..MAX).include?(intersect_point.y) &&
       line.point_in_futur(intersect_point) &&
       lines[id].point_in_futur(intersect_point)
-    )
 
-      # puts 'I am in'
-      possible_intersect += 1
-    end
+    # puts 'I am in'
+    possible_intersect += 1
   end
 
   # puts ''

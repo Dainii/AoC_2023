@@ -7,3 +7,4 @@ gem 'debug', require: false
 gem 'irb', require: false
 gem 'rubocop', require: false
 gem 'ruby-lsp', require: false
+gem 'ruby-graphviz'

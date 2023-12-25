@@ -156,7 +156,7 @@ class Route
   end
 end
 
-file_data = File.readlines('day23/real_input.txt')
+file_data = File.readlines('day23/test_input.txt')
 max_y = file_data.length - 1
 graph = {}
 map = []

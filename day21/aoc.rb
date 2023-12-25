@@ -74,8 +74,8 @@ def dijkstra(graph, start)
   distances
 end
 
-file_data = File.readlines('day21/test_input.txt')
-STEPS = 6
+file_data = File.readlines('day21/real_input.txt')
+STEPS = 64
 max_y = file_data.length - 1
 graph = {}
 s_location = ''
@@ -105,26 +105,32 @@ map = []
 y_margin = 0
 
 file_data.each_with_index do |line, y|
-  map[y] = line.chars.reject { |l| l == "\n" }.join.sub('S', '.') * 3
+  map[y] = line.chars.reject { |l| l == "\n" }.join.sub('S', '.') * 5
 end
 
 y_margin += file_data.length
 file_data.each_with_index do |line, y|
-  map[y_margin + y] = line.chars.reject { |l| l == "\n" }.join.sub('S', '.') +
+  map[y_margin + y] = line.chars.reject { |l| l == "\n" }.join.sub('S', '.') * 5
+end
+
+y_margin += file_data.length
+file_data.each_with_index do |line, y|
+  map[y_margin + y] = (line.chars.reject { |l| l == "\n" }.join.sub('S', '.') * 2) +
                       line.chars.reject { |l| l == "\n" }.join +
-                      line.chars.reject { |l| l == "\n" }.join.sub('S', '.')
+                      (line.chars.reject { |l| l == "\n" }.join.sub('S', '.') * 2)
 end
 
 y_margin += file_data.length
 file_data.each_with_index do |line, y|
-  map[y_margin + y] = line.chars.reject { |l| l == "\n" }.join.sub('S', '.') * 3
+  map[y_margin + y] = line.chars.reject { |l| l == "\n" }.join.sub('S', '.') * 5
 end
 
-map.each do |line|
-  puts line
+y_margin += file_data.length
+file_data.each_with_index do |line, y|
+  map[y_margin + y] = line.chars.reject { |l| l == "\n" }.join.sub('S', '.') * 5
 end
 
-STEPS_P2 = 1_000
+STEPS_P2 = 25
 max_y = map.length - 1
 graph = {}
 s_location = ''
@@ -143,6 +149,17 @@ end
 
 garden_spots = dijkstra(graph, s_location).select { |_k, v| v < STEPS_P2 + 1 }.reject { |_k, v| v.even? }
 # puts garden_spots
+
+garden_spots.select { |_k, v| v == STEPS_P2 }.each do |k, _v|
+  y = k.split(':')[0].to_i
+  x = k.split(':')[1].to_i
+
+  map[y][x] = 'X'
+end
+
+map.each do |line|
+  puts line
+end
 
 # Part 2 -
 puts "Part 2: #{garden_spots.length}"
